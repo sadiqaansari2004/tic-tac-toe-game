@@ -1,0 +1,182 @@
+/* tic tac toe game using c++ */
+
+#include <iostream>
+using namespace std;
+
+// array declaration
+char boxNumber[3][3] = {{'1', '2', '3'},
+                        {'4', '5', '6'},
+                        {'7', '8', '9'}};
+
+// global variables declaration
+string n1 = "";
+string n2 = "";
+int digit;
+int row;
+int colm;
+bool tie = false;
+char token = 'x';
+
+// function to display game view
+void displayGame()
+{
+    cout << "     |       |     " << endl;
+    cout << "  " << boxNumber[0][0] << "  |   " << boxNumber[0][1] << "   |   " << boxNumber[0][2] << endl;
+    cout << "-----------------" << endl;
+    cout << "     |       |     " << endl;
+    cout << "  " << boxNumber[1][0] << "  |   " << boxNumber[1][1] << "   |   " << boxNumber[1][2] << endl;
+    cout << "-----------------" << endl;
+    cout << "     |       |     " << endl;
+    cout << "  " << boxNumber[2][0] << "  |   " << boxNumber[2][1] << "   |   " << boxNumber[2][2] << endl;
+}
+
+// function to choose space and  enter 'x' or 'O'
+void choosespace()
+{
+    if (token == 'x')
+    {
+
+        cout << n1 << " Please Enter.." << endl;
+        cin >> digit;
+    }
+    else if (token == 'O')
+    {
+        cout << n2 << " Please Enter.." << endl;
+        cin >> digit;
+    }
+    switch (digit)
+    {
+    case 1:
+    {
+        row = 0;
+        colm = 0;
+        break;
+    }
+    case 2:
+    {
+        row = 0;
+        colm = 1;
+        break;
+    }
+    case 3:
+    {
+        row = 0;
+        colm = 2;
+        break;
+    }
+    case 4:
+    {
+        row = 1;
+        colm = 0;
+        break;
+    }
+    case 5:
+    {
+        row = 1;
+        colm = 1;
+        break;
+    }
+    case 6:
+    {
+        row = 1;
+        colm = 2;
+        break;
+    }
+    case 7:
+    {
+        row = 2;
+        colm = 0;
+        break;
+    }
+    case 8:
+    {
+        row = 2;
+        colm = 1;
+        break;
+    }
+    case 9:
+    {
+        row = 2;
+        colm = 2;
+        break;
+    }
+    default:
+    {
+        cout << "Invalid digit!!!" << endl;
+        break;
+    }
+    }
+
+    if (token == 'x' && boxNumber[row][colm] != 'x' && boxNumber[row][colm] != 'O')
+    {
+        token = 'O';
+        boxNumber[row][colm] = 'x';
+    }
+    else if (token == 'O' && boxNumber[row][colm] != 'O' && boxNumber[row][colm] != 'x')
+    {
+        token = 'x';
+        boxNumber[row][colm] = 'O';
+    }
+}
+
+// function to check winner player and tie of the game
+bool isGameOver()
+{
+    // loop to check row match and colm match
+    for (int i = 0; i < 3; i++)
+    {
+        if (boxNumber[i][0] == boxNumber[i][1] && boxNumber[i][1] == boxNumber[i][2] || boxNumber[0][i] == boxNumber[1][i] && boxNumber[1][i] == boxNumber[2][i])
+            return true;
+    }
+
+    // condition to check diagonal match
+    if (boxNumber[0][0] == boxNumber[1][1] && boxNumber[1][1] == boxNumber[2][2] || boxNumber[0][2] == boxNumber[1][1] && boxNumber[1][1] == boxNumber[2][0])
+    {
+        return true;
+    }
+
+    // loop to check empty space
+    for (int i = 0; i < 3; i++)
+    {
+        for (int j = 0; j < 3; j++)
+        {
+            if (boxNumber[i][j] != 'x' && boxNumber[i][j] != 'O')
+                return false;
+        }
+    }
+    tie = true;
+    return false;
+}
+
+int main()
+{
+    cout << "Enter player1 name:" << endl;
+    getline(cin, n1);
+    cout << "Enter player2 name:" << endl;
+    getline(cin, n2);
+
+    cout << n1 << " will play first.." << endl;
+    cout << n2 << " will play second.." << endl;
+    while (!isGameOver())
+    {
+        displayGame();
+        choosespace();
+    }
+
+    isGameOver();
+
+    if (tie)
+    {
+        cout << "The game is draw..!!" << endl;
+    }
+    else if (token == 'x')
+    {
+        cout << n2 << " wins...!!" << endl;
+    }
+    else if (token == 'O')
+    {
+        cout << n1 << " wins...!!" << endl;
+    }
+
+    return 0;
+}
